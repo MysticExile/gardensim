@@ -1,6 +1,7 @@
 import * as PIXI from "pixi.js"
 import logSprite from "./images/Boekje.png"
-import bgImage from "./images/background_farm.png"
+import bgImage from "./images/background farm.png"
+import bgImageStart from "./images/background field.png"
 
 export class Log extends PIXI.Sprite {
 
@@ -112,6 +113,7 @@ export class Game {
         this.loader
             .add("logTexture", logSprite)
             .add("backgroundTexture", bgImage)
+            .add("backgroundTexture2", bgImageStart)
 
     this.loader.load(() => this.doneLoading())
     }
