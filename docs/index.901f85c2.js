@@ -539,6 +539,8 @@ var _boekjePng = require("./images/Boekje.png");
 var _boekjePngDefault = parcelHelpers.interopDefault(_boekjePng);
 var _backgroundFarmPng = require("./images/background farm.png");
 var _backgroundFarmPngDefault = parcelHelpers.interopDefault(_backgroundFarmPng);
+var _backgroundFieldPng = require("./images/background field.png");
+var _backgroundFieldPngDefault = parcelHelpers.interopDefault(_backgroundFieldPng);
 class Log extends _pixiJs.Sprite {
     xspeed = 0;
     yspeed = 0;
@@ -625,7 +627,7 @@ class Game {
         });
         document.body.appendChild(this.pixi.view);
         this.loader = new _pixiJs.Loader();
-        this.loader.add("logTexture", _boekjePngDefault.default).add("backgroundTexture", _backgroundFarmPngDefault.default);
+        this.loader.add("logTexture", _boekjePngDefault.default).add("backgroundTexture", _backgroundFarmPngDefault.default).add("backgroundTexture2", _backgroundFieldPngDefault.default);
         this.loader.load(()=>this.doneLoading()
         );
     }
@@ -657,7 +659,7 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
 } //console.log("hoi")
 
-},{"pixi.js":"dsYej","./images/Boekje.png":"9iKRk","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./images/background farm.png":"apYxp"}],"dsYej":[function(require,module,exports) {
+},{"pixi.js":"dsYej","./images/Boekje.png":"9iKRk","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./images/background farm.png":"apYxp","./images/background field.png":"e7Cfe"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -37193,6 +37195,9 @@ exports.getOrigin = getOrigin;
 
 },{}],"apYxp":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "background farm.f4ab1fb4.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"e7Cfe":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "background field.87e588af.png" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}]},["a5k68","edeGs"], "edeGs", "parcelRequirea0e5")
 
