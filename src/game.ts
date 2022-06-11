@@ -2,6 +2,7 @@ import * as PIXI from "pixi.js"
 import logSprite from "./images/Boekje.png"
 import bgImage from "./images/background farm.png"
 import bgImageStart from "./images/background field.png"
+import startImage from "./images/start knop.png"
 
 export class Log extends PIXI.Sprite {
 
@@ -80,20 +81,19 @@ export class Log extends PIXI.Sprite {
     }
 }
 
-export class Bubbles extends PIXI.Sprite {
+export class Menu extends PIXI.Sprite {
 
     constructor(texture: PIXI.Texture) {
         super(texture)
-        this.x = getRandomInt(0, 900)
-        this.y = getRandomInt(0, 500)
     }
+}
 
-    update(delta: number) {
-        console.log("This bubble is updating!")
-        this.y -= 1 * delta
-        if (this.y < -100) {
-            this.y = 500
-        }
+export class startKnop extends PIXI.Sprite {
+
+    constructor(texture: PIXI.Texture) {
+        super(texture)
+        this.x = 200
+        this.y = 60
     }
 }
 
@@ -101,9 +101,9 @@ export class Game {
 
     pixi: PIXI.Application
     loader: PIXI.Loader
-    background: PIXI.Sprite
     log: Log   // <- nu een Fish in plaats van een PIXI.Sprite
-
+    menu: Menu
+    startKnop: startKnop
 
     constructor() {
         this.pixi = new PIXI.Application({ width: 800, height: 450 })
@@ -114,30 +114,34 @@ export class Game {
             .add("logTexture", logSprite)
             .add("backgroundTexture", bgImage)
             .add("backgroundTexture2", bgImageStart)
+            .add("startButton", startImage)
 
     this.loader.load(() => this.doneLoading())
     }
 
     doneLoading() {
         console.log("all textures loaded!")
-        this.background = new PIXI.Sprite(this.loader.resources["backgroundTexture"].texture!)
-        this.pixi.stage.addChild(this.background)
+        //this.log = new Log(this.loader.resources["logTexture"].texture!)
+        //this.pixi.stage.addChild(this.log)
 
-        this.log = new Log(this.loader.resources["logTexture"].texture!)
-        this.pixi.stage.addChild(this.log)
-        
-        let text = new PIXI.Text('Slay', { fontFamily: 'Arial', fontSize: 24, fill: 0xff1010, align: 'center' });
-        this.pixi.ticker.add((delta) => this.update(delta, text))
+        this.menu = new Menu(this.loader.resources["backgroundTexture2"].texture!)
+        this.pixi.stage.addChild(this.menu)
+
+        this.startKnop = new startKnop(this.loader.resources["startButton"].texture!)
+        this.pixi.stage.addChild(this.startKnop)
+
+        this.pixi.ticker.add((delta) => this.update(delta))
     }
 
-    update(delta: number, text: PIXI.Text) {
-        this.log.update(delta);
+    update(delta: number) {
+        /*this.log.update(delta);
         if (this.log.speak) {
             this.pixi.stage.addChild(text)
         }
         if (!this.log.speak) {
             this.pixi.stage.removeChild(text)
         }
+        */
     }
 }
 
