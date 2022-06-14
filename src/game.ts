@@ -8,80 +8,18 @@ import plant2 from "./images/tulp.png"
 import plant3 from "./images/viooltjes.png"
 import plant4 from "./images/zonnebloem.png"
 import plant5 from "./images/munt.png"
+import buttonLog from "./images/knop_boekje.png"
+import buttonMoestuin from "./images/knop_moestuin.png"
+import buttonEnvironment from "./images/knop_omgeving.png" 
+import { ENV } from "pixi.js"
 export class Log extends PIXI.Sprite {
-
-    xspeed = 0
-    yspeed = 0
-    alive: Boolean
-    public speak: Boolean
 
     constructor(texture: PIXI.Texture) {
         super(texture)
-        window.addEventListener("keydown", (e: KeyboardEvent) => this.onKeyDown(e))
-        window.addEventListener("keyup", (e: KeyboardEvent) => this.onKeyUp(e))
-        this.x = 600
-        this.y = 20
-        this.width = 100
-        this.height = 60
-    }
-
-    update(delta: number) {
-        this.x += this.xspeed
-        this.y += this.yspeed
-        console.log("This fish is updating!")
-    }
-
-    showLogs() {
-        if (this.speak) {
-            this.speak = false
-        }
-        else if (!this.speak) {
-            this.speak = true;
-        }
-        return this.speak
-    }
-
-    onKeyDown(e: KeyboardEvent): void {
-        switch (e.key.toUpperCase()) {
-            case "TAB":
-                this.showLogs()
-                break;
-            case "A":
-            case "ARROWLEFT":
-                this.xspeed = -7
-                break
-            case "D":
-            case "ARROWRIGHT":
-                this.xspeed = 7
-                break
-            case "W":
-            case "ARROWUP":
-                this.yspeed = -7
-                break
-            case "S":
-            case "ARROWDOWN":
-                this.yspeed = 7
-                break
-        }
-    }
-
-    onKeyUp(e: KeyboardEvent): void {
-        switch (e.key.toUpperCase()) {
-            case "TAB":
-                break;
-            case "A":
-            case "D":
-            case "ARROWLEFT":
-            case "ARROWRIGHT":
-                this.xspeed = 0
-                break
-            case "W":
-            case "S":
-            case "ARROWUP":
-            case "ARROWDOWN":
-                this.yspeed = 0
-                break
-        }
+        this.x = 150
+        this.y = 80
+        this.height = 300
+        this.width = 500
     }
 }
 
@@ -92,13 +30,98 @@ export class Menu extends PIXI.Sprite {
     }
 }
 
-export class startKnop extends PIXI.Sprite {
+export class Farm extends PIXI.Sprite {
 
     constructor(texture: PIXI.Texture) {
         super(texture)
-        this.x = 200
-        this.y = 60
     }
+}
+
+export class LogButton extends PIXI.Sprite {
+
+    isClicked: Boolean
+
+    constructor(texture: PIXI.Texture) {
+        super(texture)
+        this.width = 80
+        this.height = 77
+        this.isClicked = false;
+        this.interactive = true  // make clickable
+        this.buttonMode = true   // show hand cursor
+        this.on('pointerdown', () => this.onClick())
+    }
+
+    onClick() {
+        if (this.isClicked) {
+            this.isClicked = false;
+        }
+        else if (!this.isClicked) {
+            this.isClicked = true;
+        }
+    }
+}
+
+export class moestuinButton extends PIXI.Sprite {
+
+    isClicked: Boolean
+
+    constructor(texture: PIXI.Texture) {
+        super(texture)
+        this.width = 80
+        this.height = 77
+        this.x = 80
+        this.y = 0
+        this.isClicked = false;
+        this.interactive = true  // make clickable
+        this.buttonMode = true   // show hand cursor
+        this.on('pointerdown', () => this.onClick())
+    }
+
+    onClick() {
+        this.isClicked = true;
+    }
+}
+
+export class environmentButton extends PIXI.Sprite {
+
+    isClicked: Boolean
+
+    constructor(texture: PIXI.Texture) {
+        super(texture)
+        this.width = 80
+        this.height = 77
+        this.x = 160
+        this.y = 0
+        this.isClicked = false;
+        this.interactive = true  // make clickable
+        this.buttonMode = true   // show hand cursor
+        this.on('pointerdown', () => this.onClick())
+    }
+
+    onClick() {
+        this.isClicked = true;
+    }
+}
+
+export class startKnop extends PIXI.Sprite {
+
+    isClicked: Boolean
+
+    constructor(texture: PIXI.Texture) {
+        super(texture)
+        this.isClicked = false;
+        this.x = 200;
+        this.y = 60;
+        this.interactive = true  // make clickable
+        this.buttonMode = true   // show hand cursor
+        this.on('pointerdown', () => this.onClick())
+    }
+
+    onClick() {
+        this.isClicked = true;
+    }
+
+
 }
 
 export class Game {
@@ -108,6 +131,10 @@ export class Game {
     log: Log   // <- nu een Fish in plaats van een PIXI.Sprite
     menu: Menu
     startKnop: startKnop
+    farm: Farm
+    logButton: LogButton
+    moestuinButton: moestuinButton
+    environmentButton: environmentButton
 
     constructor() {
         this.pixi = new PIXI.Application({ width: 800, height: 450 })
@@ -119,33 +146,61 @@ export class Game {
             .add("backgroundTexture", bgImage)
             .add("backgroundTexture2", bgImageStart)
             .add("startButton", startImage)
+            .add("logButtonTexture", buttonLog)
+            .add("moestuinButtonTexture", buttonMoestuin)
+            .add("environmentButtonTexture", buttonEnvironment)
+            
 
     this.loader.load(() => this.doneLoading())
     }
 
     doneLoading() {
         console.log("all textures loaded!")
-        //this.log = new Log(this.loader.resources["logTexture"].texture!)
-        //this.pixi.stage.addChild(this.log)
-
         this.menu = new Menu(this.loader.resources["backgroundTexture2"].texture!)
         this.pixi.stage.addChild(this.menu)
 
         this.startKnop = new startKnop(this.loader.resources["startButton"].texture!)
         this.pixi.stage.addChild(this.startKnop)
 
-        this.pixi.ticker.add((delta) => this.update(delta))
+        this.farm = new Farm(this.loader.resources["backgroundTexture"].texture!)
+
+        this.logButton = new LogButton(this.loader.resources["logButtonTexture"].texture!)
+        this.log = new Log(this.loader.resources["logTexture"].texture!)
+        this.moestuinButton = new moestuinButton(this.loader.resources["moestuinButtonTexture"].texture!)
+        this.environmentButton = new environmentButton(this.loader.resources["environmentButtonTexture"].texture!)
+        
+        this.pixi.ticker.add((delta) => this.update(delta, this.startKnop, this.logButton, this.moestuinButton, this.environmentButton))
     }
 
-    update(delta: number) {
-        /*this.log.update(delta);
-        if (this.log.speak) {
-            this.pixi.stage.addChild(text)
+    update(delta: number, startKnop: startKnop, logButton: LogButton, moestuinButton: moestuinButton, environmentButton: environmentButton) {
+        //checks if the start button has been pressed
+        if (startKnop.isClicked) {
+            //removes the menu texture and the button texture
+            this.pixi.stage.removeChild(this.menu)
+            this.pixi.stage.removeChild(this.startKnop)
+            //adds farm and buttons textures
+            this.pixi.stage.addChild(this.farm);
+            this.pixi.stage.addChild(this.logButton)
+            this.pixi.stage.addChild(this.moestuinButton)
+            this.pixi.stage.addChild(this.environmentButton)
         }
-        if (!this.log.speak) {
-            this.pixi.stage.removeChild(text)
+
+        if (logButton.isClicked) {
+            this.pixi.stage.addChild(this.log)
         }
-        */
+        else if (!logButton.isClicked) {
+            this.pixi.stage.removeChild(this.log)
+        }
+
+        if (moestuinButton.isClicked) {
+            this.pixi.stage.removeChild(this.farm)
+            this.pixi.stage.removeChild(this.moestuinButton)
+        }
+
+        if (environmentButton.isClicked) {
+            this.pixi.stage.removeChild(this.farm)
+            this.pixi.stage.removeChild(this.environmentButton)
+        }
     }
 }
 
