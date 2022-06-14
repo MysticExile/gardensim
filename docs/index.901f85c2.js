@@ -543,11 +543,8 @@ var _backgroundFarmPng = require("./images/background farm.png");
 var _backgroundFarmPngDefault = parcelHelpers.interopDefault(_backgroundFarmPng);
 var _backgroundFieldPng = require("./images/background field.png");
 var _backgroundFieldPngDefault = parcelHelpers.interopDefault(_backgroundFieldPng);
-<<<<<<< HEAD
-=======
 var _startKnopPng = require("./images/start knop.png");
 var _startKnopPngDefault = parcelHelpers.interopDefault(_startKnopPng);
->>>>>>> 884d3359ce4da19bc23de5c507be48f57ef05b8a
 class Log extends _pixiJs.Sprite {
     xspeed = 0;
     yspeed = 0;
@@ -634,11 +631,7 @@ class Game {
         });
         document.body.appendChild(this.pixi.view);
         this.loader = new _pixiJs.Loader();
-<<<<<<< HEAD
-        this.loader.add("logTexture", _boekjePngDefault.default).add("backgroundTexture", _backgroundFarmPngDefault.default).add("backgroundTexture2", _backgroundFieldPngDefault.default);
-=======
         this.loader.add("logTexture", _boekjePngDefault.default).add("backgroundTexture", _backgroundFarmPngDefault.default).add("backgroundTexture2", _backgroundFieldPngDefault.default).add("startButton", _startKnopPngDefault.default);
->>>>>>> 884d3359ce4da19bc23de5c507be48f57ef05b8a
         this.loader.load(()=>this.doneLoading()
         );
     }
@@ -670,11 +663,7 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
 } //console.log("hoi")
 
-<<<<<<< HEAD
-},{"pixi.js":"dsYej","./images/Boekje.png":"9iKRk","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./images/background farm.png":"apYxp","./images/background field.png":"e7Cfe"}],"dsYej":[function(require,module,exports) {
-=======
-},{"pixi.js":"dsYej","./images/Boekje.png":"9iKRk","./images/background farm.png":"apYxp","./images/background field.png":"e7Cfe","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./images/start knop.png":"2aXDW"}],"dsYej":[function(require,module,exports) {
->>>>>>> 884d3359ce4da19bc23de5c507be48f57ef05b8a
+},{"pixi.js":"dsYej","./images/Boekje.png":"9iKRk","./images/background farm.png":"apYxp","./images/background field.png":"e7Cfe","./images/start knop.png":"2aXDW","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dsYej":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "utils", ()=>_utils
@@ -37214,12 +37203,9 @@ module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "backgr
 },{"./helpers/bundle-url":"lgJ39"}],"e7Cfe":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "background field.87e588af.png" + "?" + Date.now();
 
-<<<<<<< HEAD
-=======
 },{"./helpers/bundle-url":"lgJ39"}],"2aXDW":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('emE5o') + "start knop.502285c4.png" + "?" + Date.now();
 
->>>>>>> 884d3359ce4da19bc23de5c507be48f57ef05b8a
 },{"./helpers/bundle-url":"lgJ39"}]},["a5k68","edeGs"], "edeGs", "parcelRequirea0e5")
 
 //# sourceMappingURL=index.901f85c2.js.map
