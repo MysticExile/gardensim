@@ -22,8 +22,8 @@ class planten {
         this.loader.load(() => this.loadCompleted())
     }
         //load planten op willekeurige plekken op het veldje (lisa)
-        //is getest in ander document :)
         loadCompleted() {
+            for (let i = 0; i < 2; i++) {
                 let plant1 = new PIXI.Sprite(this.loader.resources[`plant1`].texture!)
                 plant1.x = Math.random() * this.pixi.screen.width;
                 plant1.y = 300;
@@ -53,5 +53,6 @@ class planten {
                 plant5.y = 200;
                 this.pixi.stage.addChild(plant5)
                 this.planten.push(plant5)
+        }
     }
 }
