@@ -3,11 +3,8 @@ import logSprite from "./images/Boekje.png"
 import bgImage from "./images/background farm.png"
 import bgImageStart from "./images/background field.png"
 import startImage from "./images/start knop.png"
-import plant1 from "./images/paardenbloem.png"
-import plant2 from "./images/tulp.png"
-import plant3 from "./images/viooltjes.png"
-import plant4 from "./images/zonnebloem.png"
-import plant5 from "./images/munt.png"
+
+
 export class Log extends PIXI.Sprite {
 
     xspeed = 0
@@ -108,6 +105,7 @@ export class Game {
     log: Log   // <- nu een Fish in plaats van een PIXI.Sprite
     menu: Menu
     startKnop: startKnop
+
 
     constructor() {
         this.pixi = new PIXI.Application({ width: 800, height: 450 })

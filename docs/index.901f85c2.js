@@ -641,6 +641,13 @@ class Game {
         //this.pixi.stage.addChild(this.log)
         this.menu = new Menu(this.loader.resources["backgroundTexture2"].texture);
         this.pixi.stage.addChild(this.menu);
+        //load planten op willekeurige plekken op het veldje (lisa)
+        for(let i = 0; i < 5; i++){
+            let plant = new _pixiJs.Sprite(this.loader.resources[`plant${i}`].texture);
+            plant.x = Math.random() * this.pixi.screen.width;
+            plant.y = Math.random() * this.pixi.screen.height;
+            this.pixi.stage.addChild(plant);
+        }
         this.startKnop = new startKnop(this.loader.resources["startButton"].texture);
         this.pixi.stage.addChild(this.startKnop);
         this.pixi.ticker.add((delta)=>this.update(delta)
