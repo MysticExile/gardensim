@@ -1,4 +1,6 @@
 import * as PIXI from "pixi.js"
+
+//import sprites and textures
 import logSprite from "./images/Boekje.png"
 import bgImage from "./images/background farm.png"
 import bgImageStart from "./images/background field.png"
@@ -6,117 +8,20 @@ import startImage from "./images/start knop.png"
 import buttonLog from "./images/knop_boekje.png"
 import buttonMoestuin from "./images/knop_moestuin.png"
 import buttonEnvironment from "./images/knop_omgeving.png" 
-import { ENV } from "pixi.js"
-export class Log extends PIXI.Sprite {
+//import classes
+import { Log } from './Log'
+import { Menu } from './Menu'
+import { Farm } from './Farm'
+import { LogButton } from './LogButton'
+import { moestuinButton } from './moestuinButton'
+import { environmentButton } from './environmentButton'
+import { startKnop } from './startKnop'
 
-    constructor(texture: PIXI.Texture) {
-        super(texture)
-        this.x = 150
-        this.y = 80
-        this.height = 300
-        this.width = 500
-    }
-}
-
-export class Menu extends PIXI.Sprite {
-
-    constructor(texture: PIXI.Texture) {
-        super(texture)
-    }
-}
-
-export class Farm extends PIXI.Sprite {
-
-    constructor(texture: PIXI.Texture) {
-        super(texture)
-    }
-}
-
-export class LogButton extends PIXI.Sprite {
-
-    isClicked: Boolean
-
-    constructor(texture: PIXI.Texture) {
-        super(texture)
-        this.width = 80
-        this.height = 77
-        this.isClicked = false;
-        this.interactive = true  // make clickable
-        this.buttonMode = true   // show hand cursor
-        this.on('pointerdown', () => this.onClick())
-    }
-
-    onClick() {
-        if (this.isClicked) {
-            this.isClicked = false;
-        }
-        else if (!this.isClicked) {
-            this.isClicked = true;
-        }
-    }
-}
-
-export class moestuinButton extends PIXI.Sprite {
-
-    isClicked: Boolean
-
-    constructor(texture: PIXI.Texture) {
-        super(texture)
-        this.width = 80
-        this.height = 77
-        this.x = 80
-        this.y = 0
-        this.isClicked = false;
-        this.interactive = true  // make clickable
-        this.buttonMode = true   // show hand cursor
-        this.on('pointerdown', () => this.onClick())
-    }
-
-    onClick() {
-        this.isClicked = true;
-    }
-}
-
-export class environmentButton extends PIXI.Sprite {
-
-    isClicked: Boolean
-
-    constructor(texture: PIXI.Texture) {
-        super(texture)
-        this.width = 80
-        this.height = 77
-        this.x = 160
-        this.y = 0
-        this.isClicked = false;
-        this.interactive = true  // make clickable
-        this.buttonMode = true   // show hand cursor
-        this.on('pointerdown', () => this.onClick())
-    }
-
-    onClick() {
-        this.isClicked = true;
-    }
-}
-
-export class startKnop extends PIXI.Sprite {
-
-    isClicked: Boolean
-
-    constructor(texture: PIXI.Texture) {
-        super(texture)
-        this.isClicked = false;
-        this.x = 200;
-        this.y = 60;
-        this.interactive = true  // make clickable
-        this.buttonMode = true   // show hand cursor
-        this.on('pointerdown', () => this.onClick())
-    }
-
-    onClick() {
-        this.isClicked = true;
-    }
-
-
+//Make an easier randomised integer function, call this if you need a random integer
+function getRandomInt(min: number, max: number) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
 }
 
 export class Game {
@@ -152,18 +57,22 @@ export class Game {
 
     doneLoading() {
         console.log("all textures loaded!")
-        this.menu = new Menu(this.loader.resources["backgroundTexture2"].texture!)
+        //load initial load screen
+        this.menu = new Menu(this.loader.resources["backgroundTexture2"].texture!, this)
         this.pixi.stage.addChild(this.menu)
 
-        this.startKnop = new startKnop(this.loader.resources["startButton"].texture!)
+        this.startKnop = new startKnop(this.loader.resources["startButton"].texture!, this)
         this.pixi.stage.addChild(this.startKnop)
 
-        this.farm = new Farm(this.loader.resources["backgroundTexture"].texture!)
+        //load textures that are to be eventually used
 
-        this.logButton = new LogButton(this.loader.resources["logButtonTexture"].texture!)
-        this.log = new Log(this.loader.resources["logTexture"].texture!)
-        this.moestuinButton = new moestuinButton(this.loader.resources["moestuinButtonTexture"].texture!)
-        this.environmentButton = new environmentButton(this.loader.resources["environmentButtonTexture"].texture!)
+        this.farm = new Farm(this.loader.resources["backgroundTexture"].texture!, this)
+
+        this.logButton = new LogButton(this.loader.resources["logButtonTexture"].texture!, this)
+        this.moestuinButton = new moestuinButton(this.loader.resources["moestuinButtonTexture"].texture!, this)
+        this.environmentButton = new environmentButton(this.loader.resources["environmentButtonTexture"].texture!, this)
+
+        this.log = new Log(this.loader.resources["logTexture"].texture!, this)
         
         this.pixi.ticker.add((delta) => this.update(delta, this.startKnop, this.logButton, this.moestuinButton, this.environmentButton))
     }
@@ -180,7 +89,7 @@ export class Game {
             this.pixi.stage.addChild(this.moestuinButton)
             this.pixi.stage.addChild(this.environmentButton)
         }
-
+        //click mechanics for the buttons
         if (logButton.isClicked) {
             this.pixi.stage.addChild(this.log)
         }
@@ -201,10 +110,3 @@ export class Game {
 }
 
 new Game()
-
-function getRandomInt(min: number, max: number) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
-}
-//console.log("hoi")
