@@ -3,13 +3,11 @@ import { Game } from './game'
 
 export class startKnop extends PIXI.Sprite {
 
-    isClicked: Boolean
     game: Game
 
     constructor(texture: PIXI.Texture, game: Game) {
         super(texture)
         this.game = game
-        this.isClicked = false;
         this.x = 200;
         this.y = 60;
         this.interactive = true  // make clickable
@@ -18,7 +16,7 @@ export class startKnop extends PIXI.Sprite {
     }
 
     onClick() {
-        this.isClicked = true;
+        this.game.destroyChildren();
+        this.game.loadFarmStage();
     }
-
 }

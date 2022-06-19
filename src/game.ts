@@ -3,11 +3,13 @@ import * as PIXI from "pixi.js"
 //import sprites and textures
 import logSprite from "./images/Boekje.png"
 import bgImage from "./images/background farm.png"
-import bgImageStart from "./images/background field.png"
+import bgImageField from "./images/background field.png"
+import bgImageStart from "./images/startmenu.png"
 import startImage from "./images/start knop.png"
 import buttonLog from "./images/knop_boekje.png"
 import buttonMoestuin from "./images/knop_moestuin.png"
 import buttonEnvironment from "./images/knop_omgeving.png" 
+
 //import classes
 import { Log } from './Log'
 import { Menu } from './Menu'
@@ -16,6 +18,7 @@ import { LogButton } from './LogButton'
 import { moestuinButton } from './moestuinButton'
 import { environmentButton } from './environmentButton'
 import { startKnop } from './startKnop'
+import { Environment } from './environment'
 
 //Make an easier randomised integer function, call this if you need a random integer
 function getRandomInt(min: number, max: number) {
@@ -32,6 +35,7 @@ export class Game {
     menu: Menu
     startKnop: startKnop
     farm: Farm
+    environment: Environment
     logButton: LogButton
     moestuinButton: moestuinButton
     environmentButton: environmentButton
@@ -46,6 +50,7 @@ export class Game {
             .add("logTexture", logSprite)
             .add("backgroundTexture", bgImage)
             .add("backgroundTexture2", bgImageStart)
+            .add("backgroundTexture3", bgImageField)
             .add("startButton", startImage)
             .add("logButtonTexture", buttonLog)
             .add("moestuinButtonTexture", buttonMoestuin)
@@ -73,39 +78,38 @@ export class Game {
         this.environmentButton = new environmentButton(this.loader.resources["environmentButtonTexture"].texture!, this)
 
         this.log = new Log(this.loader.resources["logTexture"].texture!, this)
+
+        this.environment = new Environment(this.loader.resources["backgroundTexture3"].texture!, this)
+
+        //start gameloop
         
-        this.pixi.ticker.add((delta) => this.update(delta, this.startKnop, this.logButton, this.moestuinButton, this.environmentButton))
+        this.pixi.ticker.add((delta) => this.update(delta))
     }
 
-    update(delta: number, startKnop: startKnop, logButton: LogButton, moestuinButton: moestuinButton, environmentButton: environmentButton) {
-        //checks if the start button has been pressed
-        if (startKnop.isClicked) {
-            //removes the menu texture and the button texture
-            this.pixi.stage.removeChild(this.menu)
-            this.pixi.stage.removeChild(this.startKnop)
-            //adds farm and buttons textures
-            this.pixi.stage.addChild(this.farm);
-            this.pixi.stage.addChild(this.logButton)
-            this.pixi.stage.addChild(this.moestuinButton)
-            this.pixi.stage.addChild(this.environmentButton)
-        }
-        //click mechanics for the buttons
-        if (logButton.isClicked) {
-            this.pixi.stage.addChild(this.log)
-        }
-        else if (!logButton.isClicked) {
-            this.pixi.stage.removeChild(this.log)
-        }
+    update(delta: number) {}
 
-        if (moestuinButton.isClicked) {
-            this.pixi.stage.removeChild(this.farm)
-            this.pixi.stage.removeChild(this.moestuinButton)
-        }
+    loadLog() {
+        this.pixi.stage.addChild(this.log)
+    }
 
-        if (environmentButton.isClicked) {
-            this.pixi.stage.removeChild(this.farm)
-            this.pixi.stage.removeChild(this.environmentButton)
-        }
+    loadFarmStage() {
+        this.pixi.stage.addChild(this.farm);
+        this.pixi.stage.addChild(this.logButton)
+        this.pixi.stage.addChild(this.moestuinButton)
+        this.pixi.stage.addChild(this.environmentButton)
+        console.log("Farm stage loaded")
+    }
+
+    loadEnvironmentStage() {
+        this.pixi.stage.addChild(this.environment)
+        this.pixi.stage.addChild(this.logButton)
+        this.pixi.stage.addChild(this.moestuinButton)
+        this.pixi.stage.addChild(this.environmentButton)
+        console.log("Environment stage loaded")
+    }
+
+    destroyChildren() {
+        this.pixi.stage.destroy
     }
 }
 

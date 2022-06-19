@@ -3,7 +3,7 @@ import { Game } from './game'
 
 export class LogButton extends PIXI.Sprite {
 
-    isClicked: Boolean
+    private toggle: Boolean
     game: Game
 
     constructor(texture: PIXI.Texture, game: Game) {
@@ -11,18 +11,20 @@ export class LogButton extends PIXI.Sprite {
         this.game = game
         this.width = 80
         this.height = 77
-        this.isClicked = false;
+        this.toggle = false;
         this.interactive = true  // make clickable
         this.buttonMode = true   // show hand cursor
         this.on('pointerdown', () => this.onClick())
     }
 
     onClick() {
-        if (this.isClicked) {
-            this.isClicked = false;
+        if (!this.toggle) {
+            this.toggle = true;
+            this.game.loadLog();
         }
-        else if (!this.isClicked) {
-            this.isClicked = true;
+        else if (this.toggle) {
+            this.toggle = false;
+            this.game.pixi.stage.removeChild(this.game.log)
         }
     }
 }
