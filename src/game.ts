@@ -9,6 +9,12 @@ import startImage from "./images/start knop.png"
 import buttonLog from "./images/knop_boekje.png"
 import buttonMoestuin from "./images/knop_moestuin.png"
 import buttonEnvironment from "./images/knop_omgeving.png" 
+import plant1 from "./images/paardenbloem.png"
+import plant2 from "./images/tulp.png"
+import plant3 from "./images/viooltjes.png"
+import plant4 from "./images/zonnebloem.png"
+import plant5 from "./images/munt.png"
+import pot from "./images/potje.png"
 
 //import classes
 import { Log } from './Log'
@@ -19,13 +25,8 @@ import { moestuinButton } from './moestuinButton'
 import { environmentButton } from './environmentButton'
 import { startKnop } from './startKnop'
 import { Environment } from './environment'
-
-//Make an easier randomised integer function, call this if you need a random integer
-function getRandomInt(min: number, max: number) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
-}
+import { Plant } from './Plant'
+import { Pot } from './Pot'
 
 export class Game {
 
@@ -36,6 +37,10 @@ export class Game {
     startKnop: startKnop
     farm: Farm
     environment: Environment
+    plant: Plant
+    pot: Pot
+    planten: Plant[] = []
+    pots: Pot[] = []
     logButton: LogButton
     moestuinButton: moestuinButton
     environmentButton: environmentButton
@@ -55,6 +60,12 @@ export class Game {
             .add("logButtonTexture", buttonLog)
             .add("moestuinButtonTexture", buttonMoestuin)
             .add("environmentButtonTexture", buttonEnvironment)
+            .add('plant1', plant1)
+            .add('plant2', plant2)
+            .add('plant3', plant3)
+            .add('plant4', plant4)
+            .add('plant5', plant5)
+            .add('potTexture', pot)
             
 
     this.loader.load(() => this.doneLoading())
@@ -81,15 +92,27 @@ export class Game {
 
         this.environment = new Environment(this.loader.resources["backgroundTexture3"].texture!, this)
 
+        for (let i = 0; i < 5; i++) {
+            let x = 25 + (150 * i);
+            let y = 225
+            if (i % 2 != 0) {
+                y = 325
+            }
+            let pot = new Pot(this.loader.resources["potTexture"].texture!, this, x, y)
+            this.pots.push(pot)
+        }
+
         //start gameloop
         
         this.pixi.ticker.add((delta) => this.update(delta))
     }
 
-    update(delta: number) {}
+    update(delta: number) {
+    }
 
     loadLog() {
         this.pixi.stage.addChild(this.log)
+        console.log("Log loaded")
     }
 
     loadFarmStage() {
@@ -97,6 +120,10 @@ export class Game {
         this.pixi.stage.addChild(this.logButton)
         this.pixi.stage.addChild(this.moestuinButton)
         this.pixi.stage.addChild(this.environmentButton)
+        for (let i = 0; i < this.pots.length; i++) {
+            this.pixi.stage.addChild(this.pots[i])
+        }
+        console.log(this.pots[0].getIsClicked())
         console.log("Farm stage loaded")
     }
 
@@ -110,6 +137,12 @@ export class Game {
 
     destroyChildren() {
         this.pixi.stage.destroy
+    }
+    //Make an easier randomised integer function, call this if you need a random integer
+    getRandomInt(min: number, max: number) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
     }
 }
 
