@@ -5,7 +5,7 @@ import plant3 from "./images/viooltjes.png"
 import plant4 from "./images/zonnebloem.png"
 import plant5 from "./images/munt.png"
 
-class planten {
+export class planten {
     pixi : PIXI.Application // canvas element in de html file
     loader : PIXI.Loader
     planten: PIXI.Sprite[] = []
