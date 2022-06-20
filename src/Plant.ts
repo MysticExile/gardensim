@@ -16,6 +16,7 @@ export class Plant extends PIXI.Sprite {
     }
 
     onClick() {
+        
         //roep hier de methode aan die de informatie en trivia vragen toont.
     }
 }
