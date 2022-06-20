@@ -1,5 +1,6 @@
 import * as PIXI from 'pixi.js'
 import { Game } from './game'
+import { planten } from './planten_veld'
 
 export class Environment extends PIXI.Sprite {
     game: Game
@@ -7,4 +8,5 @@ export class Environment extends PIXI.Sprite {
         super(texture)
         this.game = game
     }
+    
 }
