@@ -26,7 +26,7 @@ export class Plant extends PIXI.Sprite {
         this.game.pixi.stage.addChild(text);
         let a = this.getPlantIndex()
         //calls addPlant with the index of the clicked on plant
-        this.game.addPlant(a);
+        this.game.addPlantToLog(a);
     }
 
     //removes the name of the plant
@@ -108,5 +108,9 @@ export class Plant extends PIXI.Sprite {
             }
         }
         return;
+    }
+
+    getplantNaam() {
+        return this.plantNaam;
     }
 }

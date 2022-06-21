@@ -5,6 +5,7 @@ import { Plant } from './Plant'
 export class Log extends PIXI.Sprite {
 
     game: Game
+    private plant: Plant
     private plants: Plant[] = []
     private plantNaam = "*"
     private pageNumber = 0;
@@ -25,9 +26,18 @@ export class Log extends PIXI.Sprite {
     }
 
     //adds plant to the array in this class
-    public addPlant(plant: Plant) {
+    public addPlantToLog(plant: Plant) {
         console.log(plant)
-        this.plants.push(plant)
+        this.plant = plant
+        console.log(this.plants.length)
+        //for (let i = 0; i < this.plants.length; i++) {
+        //    if (this.plants[i].getPlantNaam() !== plant.getPlantNaam()) {
+        //        this.plants.push(plant)
+        //        console.log("Log heeft nu een extra plant")
+        //    }
+        //    console.log(i)
+        //}
+        this.plants.push(this.plant)
     }
 
     //gets the current page
@@ -86,8 +96,20 @@ export class Log extends PIXI.Sprite {
         }
     }
 
+    removePlantFromLog(a: Plant) {
+        this.plants = this.plants.filter(data => data.getPlantNaam() != a.getPlantNaam())
+    }
+
     //gets the text object
     getText() {
         return this.text;
+    }
+
+    getCurrentPlant() {
+        return this.plants[this.pageNumber];
+    }
+
+    getPlantArray() {
+        return this.plants;
     }
 }

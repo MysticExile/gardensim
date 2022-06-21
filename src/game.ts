@@ -126,7 +126,7 @@ export class Game {
                 y = 325
             }
             //as all pots are the same we don't need a name for the pots
-            let pot = new Pot(this.loader.resources["potTexture"].texture!, this, x, y)
+            let pot = new Pot(this.loader.resources["potTexture"].texture!, this, x, y, i)
             this.pots.push(pot)
         }
 
@@ -139,8 +139,8 @@ export class Game {
     }
 
     //adds a plant to the array in Log.ts
-    addPlant(a: number) {
-        this.log.addPlant(this.planten[a]);
+    addPlantToLog(a: number) {
+        this.log.addPlantToLog(this.planten[a]);
     }
 
     //loads log and navigation arrows
@@ -183,6 +183,9 @@ export class Game {
         for (let i = 0; i < this.pots.length; i++) {
             this.pixi.stage.addChild(this.pots[i])
         }
+        for (let i = 0; i < this.pots.length; i++) {
+            this.planten = this.planten.filter(data => data.getplantNaam() != this.pots[i].plant.getplantNaam())
+        }
         console.log("Farm stage loaded")
     }
 
@@ -193,7 +196,7 @@ export class Game {
         this.pixi.stage.addChild(this.moestuinButton)
         this.pixi.stage.addChild(this.environmentButton)
         //loads plants out of the array
-        for (let i = 0; i < this.planten.length; i++) {
+        for(let i = 0; i < this.planten.length; i++) {
             this.pixi.stage.addChild(this.planten[i])
         }
         console.log("Environment stage loaded")
@@ -201,11 +204,20 @@ export class Game {
 
     //destroys all current children on the stage
     destroyChildren() {
-        for (let i = 0; i < this.pixi.stage.children.length; i++) {
-            this.pixi.stage.removeChild(this.pixi.stage.children[i])
-            this.pixi.stage.removeChild(this.pixi.stage.children[i])
-            this.pixi.stage.removeChild(this.pixi.stage.children[i])
-            this.pixi.stage.removeChild(this.pixi.stage.children[i])
+        //for (let i = 0; i < this.pixi.stage.children.length; i++) {
+        //    this.pixi.stage.removeChild(this.pixi.stage.children[i])
+        //    this.pixi.stage.removeChild(this.pixi.stage.children[i])
+        //    this.pixi.stage.removeChild(this.pixi.stage.children[i])
+        //    this.pixi.stage.removeChild(this.pixi.stage.children[i])
+        //    this.pixi.stage.removeChild(this.pixi.stage.children[i])
+        //    this.pixi.stage.removeChild(this.pixi.stage.children[i])
+        //    this.pixi.stage.removeChild(this.pixi.stage.children[i])
+        //    this.pixi.stage.removeChild(this.pixi.stage.children[i])
+        //    this.pixi.stage.removeChild(this.pixi.stage.children[i])
+        //}
+
+        while (this.pixi.stage.children.length > 0) {
+            this.pixi.stage.removeChild(this.pixi.stage.children[0]);
         }
     }
     //Make an easier randomised integer function, call this if you need a random integer
@@ -213,6 +225,17 @@ export class Game {
         min = Math.ceil(min);
         max = Math.floor(max);
         return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+    }
+
+    addPlantToPot(a: number) {
+        if (this.log.getPlantArray()[0] != undefined) {
+            this.pots[a].addPlant(this.log.getCurrentPlant())
+        }
+    }
+
+    removePlantFromLog(a: Plant) {
+        this.log.removePlantFromLog(a);
+        console.log(`plant ${a} has been removed`)
     }
 }
 //starts the game
