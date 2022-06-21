@@ -32,18 +32,18 @@ export class Game {
 
     pixi: PIXI.Application
     loader: PIXI.Loader
-    log: Log   // <- nu een Fish in plaats van een PIXI.Sprite
-    menu: Menu
-    startKnop: startKnop
-    farm: Farm
-    environment: Environment
-    plant: Plant
-    pot: Pot
-    planten: Plant[] = []
-    pots: Pot[] = []
-    logButton: LogButton
-    moestuinButton: moestuinButton
-    environmentButton: environmentButton
+    private log: Log   // <- nu een Fish in plaats van een PIXI.Sprite
+    private menu: Menu
+    private startKnop: startKnop
+    private farm: Farm
+    private environment: Environment
+    private plant: Plant
+    private pot: Pot
+    private planten: Plant[] = []
+    private pots: Pot[] = []
+    private logButton: LogButton
+    private moestuinButton: moestuinButton
+    private environmentButton: environmentButton
 
 
     constructor() {
@@ -94,6 +94,17 @@ export class Game {
 
         for (let i = 0; i < 5; i++) {
             let x = 25 + (150 * i);
+            let y = 235
+            if (i % 2 != 0) {
+                y = 200
+            }
+            let plantTexture = "plant" + (i+1)
+            let plant = new Plant(this.loader.resources[plantTexture].texture!, this, x, y, plantTexture)
+            this.planten.push(plant)
+        }
+
+        for (let i = 0; i < 5; i++) {
+            let x = 25 + (150 * i);
             let y = 225
             if (i % 2 != 0) {
                 y = 325
@@ -123,7 +134,6 @@ export class Game {
         for (let i = 0; i < this.pots.length; i++) {
             this.pixi.stage.addChild(this.pots[i])
         }
-        console.log(this.pots[0].getIsClicked())
         console.log("Farm stage loaded")
     }
 
@@ -132,11 +142,19 @@ export class Game {
         this.pixi.stage.addChild(this.logButton)
         this.pixi.stage.addChild(this.moestuinButton)
         this.pixi.stage.addChild(this.environmentButton)
+        for (let i = 0; i < this.planten.length; i++) {
+            this.pixi.stage.addChild(this.planten[i])
+        }
         console.log("Environment stage loaded")
     }
 
     destroyChildren() {
-        this.pixi.stage.destroy
+        for (let i = 0; i < this.pixi.stage.children.length; i++) {
+            this.pixi.stage.removeChild(this.pixi.stage.children[i])
+            this.pixi.stage.removeChild(this.pixi.stage.children[i])
+            this.pixi.stage.removeChild(this.pixi.stage.children[i])
+            this.pixi.stage.removeChild(this.pixi.stage.children[i])
+        }
     }
     //Make an easier randomised integer function, call this if you need a random integer
     getRandomInt(min: number, max: number) {
