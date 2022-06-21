@@ -18,7 +18,9 @@ export class environmentButton extends PIXI.Sprite {
     }
 
     onClick() {
+        //destroy all previous loaded content
         this.game.destroyChildren();
+        //load new stage
         this.game.loadEnvironmentStage();
     }
 }

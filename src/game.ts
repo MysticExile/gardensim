@@ -36,7 +36,7 @@ export class Game {
 
     pixi: PIXI.Application
     loader: PIXI.Loader
-    public log: Log   // <- nu een Fish in plaats van een PIXI.Sprite
+    public log: Log
     private menu: Menu
     private startKnop: startKnop
     private farm: Farm
@@ -102,23 +102,30 @@ export class Game {
 
         this.environment = new Environment(this.loader.resources["backgroundTexture3"].texture!, this)
 
+        //load the amount of plants we currently have
         for (let i = 0; i < 5; i++) {
+            //makes sure everything isn't exactly straight
             let x = 25 + (150 * i);
             let y = 235
+            //if the i value of the plant is not divisible by 2 (uneven) move the plant a bit higher up
             if (i % 2 != 0) {
                 y = 200
             }
+            //this makes sure we get the actual names of the plants right
             let plantTexture = "plant" + (i+1)
             let plant = new Plant(this.loader.resources[plantTexture].texture!, this, x, y, plantTexture)
+            //add plants to the array
             this.planten.push(plant)
         }
 
+        //same stuff here except its pots
         for (let i = 0; i < 5; i++) {
             let x = 25 + (150 * i);
             let y = 225
             if (i % 2 != 0) {
                 y = 325
             }
+            //as all pots are the same we don't need a name for the pots
             let pot = new Pot(this.loader.resources["potTexture"].texture!, this, x, y)
             this.pots.push(pot)
         }
@@ -131,10 +138,12 @@ export class Game {
     update(delta: number) {
     }
 
+    //adds a plant to the array in Log.ts
     addPlant(a: number) {
         this.log.addPlant(this.planten[a]);
     }
 
+    //loads log and navigation arrows
     loadLog() {
         this.pixi.stage.addChild(this.log)
         this.pixi.stage.addChild(this.arrowNext)
@@ -143,45 +152,54 @@ export class Game {
         console.log("Log loaded")
     }
 
+    //unloads log and navigation arrows
     unLoadLog() {
         this.pixi.stage.removeChild(this.log)
         this.pixi.stage.removeChild(this.arrowNext)
         this.pixi.stage.removeChild(this.arrowPrevious)
+        //makes sure to get the correct text object
         let a = this.log.getText();
         this.pixi.stage.removeChild(a);
         console.log("Log loaded")
     }
 
+    //navigates to the next page
     nextPage() {
         this.log.nextPage();
     }
 
+    //navigates to the previous page
     previousPage() {
         this.log.previousPage();
     }
 
+    //loads farm stage
     loadFarmStage() {
         this.pixi.stage.addChild(this.farm);
         this.pixi.stage.addChild(this.logButton)
         this.pixi.stage.addChild(this.moestuinButton)
         this.pixi.stage.addChild(this.environmentButton)
+        //loads pots out of the array
         for (let i = 0; i < this.pots.length; i++) {
             this.pixi.stage.addChild(this.pots[i])
         }
         console.log("Farm stage loaded")
     }
 
+    //loads environment stage
     loadEnvironmentStage() {
         this.pixi.stage.addChild(this.environment)
         this.pixi.stage.addChild(this.logButton)
         this.pixi.stage.addChild(this.moestuinButton)
         this.pixi.stage.addChild(this.environmentButton)
+        //loads plants out of the array
         for (let i = 0; i < this.planten.length; i++) {
             this.pixi.stage.addChild(this.planten[i])
         }
         console.log("Environment stage loaded")
     }
 
+    //destroys all current children on the stage
     destroyChildren() {
         for (let i = 0; i < this.pixi.stage.children.length; i++) {
             this.pixi.stage.removeChild(this.pixi.stage.children[i])
@@ -197,5 +215,5 @@ export class Game {
         return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
     }
 }
-
+//starts the game
 new Game()

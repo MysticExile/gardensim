@@ -20,18 +20,21 @@ export class Plant extends PIXI.Sprite {
     }
 
     onClick(text: PIXI.Text, x: number, y: number) {
-        //roep hier de methode aan die de informatie en trivia vragen toont.
+        //shows name of the plant when you click on it
         text.x = x
         text.y = y - 25
         this.game.pixi.stage.addChild(text);
         let a = this.getPlantIndex()
+        //calls addPlant with the index of the clicked on plant
         this.game.addPlant(a);
     }
 
+    //removes the name of the plant
     onLift(text: PIXI.Text) {
         this.game.pixi.stage.removeChild(text);
     }
 
+    //decodes texture to actual plantname
     getPlantNaam() {
         switch (this.plantNaam) {
             case "plant1": {
@@ -55,9 +58,11 @@ export class Plant extends PIXI.Sprite {
                 break;
             }
         }
+        //on the ocassion that none of the plant names match, that the plant is undefined or that the player just doesn't have any plants yet, return a placeholder.
         return "Je hebt nog geen planten!";
     }
 
+    //decodes plant name to index in the Game.ts/planten[] array
     getPlantIndex() {
         switch (this.plantNaam) {
             case "paardenbloem": {
@@ -80,6 +85,7 @@ export class Plant extends PIXI.Sprite {
                 return 4;
                 break;
             }
+                //make sure that either name given will give the correct index
             case "plant1": {
                 return 0;
                 break;
