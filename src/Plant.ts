@@ -4,7 +4,7 @@ import { Game } from './game'
 export class Plant extends PIXI.Sprite {
 
     game: Game
-    private plantNaam: string
+    private plantNaam = "*"
 
     constructor(texture: PIXI.Texture, game: Game, x: number, y: number, plantNaam: string) {
         super(texture)
@@ -24,6 +24,8 @@ export class Plant extends PIXI.Sprite {
         text.x = x
         text.y = y - 25
         this.game.pixi.stage.addChild(text);
+        let a = this.getPlantIndex()
+        this.game.addPlant(a);
     }
 
     onLift(text: PIXI.Text) {
@@ -34,19 +36,71 @@ export class Plant extends PIXI.Sprite {
         switch (this.plantNaam) {
             case "plant1": {
                 return "paardenbloem";
+                break;
             }
             case "plant2": {
                 return "tulp";
+                break;
             }
             case "plant3": {
                 return "viooltje";
+                break;
             }
             case "plant4": {
                 return "zonnebloem";
+                break;
             }
             case "plant5": {
                 return "munt";
+                break;
             }
         }
+        return "Je hebt nog geen planten!";
+    }
+
+    getPlantIndex() {
+        switch (this.plantNaam) {
+            case "paardenbloem": {
+                return 0;
+                break;
+            }
+            case "tulp": {
+                return 1;
+                break;
+            }
+            case "viooltje": {
+                return 2;
+                break;
+            }
+            case "zonnebloem": {
+                return 3;
+                break;
+            }
+            case "munt": {
+                return 4;
+                break;
+            }
+            case "plant1": {
+                return 0;
+                break;
+            }
+            case "plant2": {
+                return 1;
+                break;
+            }
+            case "plant3": {
+                return 2;
+                break;
+            }
+            case "plant4": {
+                return 3;
+                break;
+            }
+            case "plant5": {
+                return 4;
+                break;
+            }
+        }
+        return;
     }
 }

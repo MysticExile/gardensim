@@ -15,6 +15,8 @@ import plant3 from "./images/viooltjes.png"
 import plant4 from "./images/zonnebloem.png"
 import plant5 from "./images/munt.png"
 import pot from "./images/potje.png"
+import next from "./images/arrow_right.png"
+import previous from "./images/arrow_left.png"
 
 //import classes
 import { Log } from './Log'
@@ -27,23 +29,27 @@ import { startKnop } from './startKnop'
 import { Environment } from './environment'
 import { Plant } from './Plant'
 import { Pot } from './Pot'
+import { arrowNext } from './arrowNext'
+import { arrowPrevious } from './arrowPrevious'
 
 export class Game {
 
     pixi: PIXI.Application
     loader: PIXI.Loader
-    private log: Log   // <- nu een Fish in plaats van een PIXI.Sprite
+    public log: Log   // <- nu een Fish in plaats van een PIXI.Sprite
     private menu: Menu
     private startKnop: startKnop
     private farm: Farm
     private environment: Environment
-    private plant: Plant
+    public plant: Plant
     private pot: Pot
     private planten: Plant[] = []
     private pots: Pot[] = []
     private logButton: LogButton
     private moestuinButton: moestuinButton
     private environmentButton: environmentButton
+    public arrowPrevious: arrowPrevious
+    public arrowNext: arrowNext
 
 
     constructor() {
@@ -66,6 +72,8 @@ export class Game {
             .add('plant4', plant4)
             .add('plant5', plant5)
             .add('potTexture', pot)
+            .add('nextButtonTexture', next)
+            .add('previousButtonTexture', previous)
             
 
     this.loader.load(() => this.doneLoading())
@@ -89,6 +97,8 @@ export class Game {
         this.environmentButton = new environmentButton(this.loader.resources["environmentButtonTexture"].texture!, this)
 
         this.log = new Log(this.loader.resources["logTexture"].texture!, this)
+        this.arrowNext = new arrowNext(this.loader.resources['nextButtonTexture'].texture!, this)
+        this.arrowPrevious = new arrowPrevious(this.loader.resources['previousButtonTexture'].texture!, this)
 
         this.environment = new Environment(this.loader.resources["backgroundTexture3"].texture!, this)
 
@@ -121,9 +131,33 @@ export class Game {
     update(delta: number) {
     }
 
+    addPlant(a: number) {
+        this.log.addPlant(this.planten[a]);
+    }
+
     loadLog() {
         this.pixi.stage.addChild(this.log)
+        this.pixi.stage.addChild(this.arrowNext)
+        this.pixi.stage.addChild(this.arrowPrevious)
+        this.log.getPage();
         console.log("Log loaded")
+    }
+
+    unLoadLog() {
+        this.pixi.stage.removeChild(this.log)
+        this.pixi.stage.removeChild(this.arrowNext)
+        this.pixi.stage.removeChild(this.arrowPrevious)
+        let a = this.log.getText();
+        this.pixi.stage.removeChild(a);
+        console.log("Log loaded")
+    }
+
+    nextPage() {
+        this.log.nextPage();
+    }
+
+    previousPage() {
+        this.log.previousPage();
     }
 
     loadFarmStage() {

@@ -1,10 +1,12 @@
 import * as PIXI from 'pixi.js'
 import { Game } from './game'
+import { Log } from './Log'
 
 export class LogButton extends PIXI.Sprite {
 
     private toggle: Boolean
     game: Game
+    log: Log
 
     constructor(texture: PIXI.Texture, game: Game) {
         super(texture)
@@ -24,7 +26,7 @@ export class LogButton extends PIXI.Sprite {
         }
         else if (this.toggle) {
             this.toggle = false;
-            this.game.pixi.stage.removeChild(this.game.log)
+            this.game.unLoadLog();
         }
     }
 }
