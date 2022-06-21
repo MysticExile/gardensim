@@ -2,7 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\images"
+    "\\src\\images",
+    "\\src\\sound"
   ],
   "SelectedNode": "\\src\\game.ts",
   "PreviewInSolutionExplorer": false

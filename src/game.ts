@@ -17,6 +17,7 @@ import plant5 from "./images/munt.png"
 import pot from "./images/potje.png"
 import next from "./images/arrow_right.png"
 import previous from "./images/arrow_left.png"
+import music from "url:./sound/music.mp3"
 
 //import classes
 import { Log } from './Log'
@@ -74,6 +75,7 @@ export class Game {
             .add('potTexture', pot)
             .add('nextButtonTexture', next)
             .add('previousButtonTexture', previous)
+            .add("music", music)
             
 
     this.loader.load(() => this.doneLoading())
@@ -82,6 +84,7 @@ export class Game {
     doneLoading() {
         console.log("all textures loaded!")
         //load initial load screen
+
         this.menu = new Menu(this.loader.resources["backgroundTexture2"].texture!, this)
         this.pixi.stage.addChild(this.menu)
 
@@ -133,6 +136,8 @@ export class Game {
         //start gameloop
         
         this.pixi.ticker.add((delta) => this.update(delta))
+        let music = this.loader.resources["music"].data!
+        music.play();
     }
 
     update(delta: number) {
