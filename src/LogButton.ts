@@ -5,10 +5,12 @@ export class LogButton extends PIXI.Sprite {
 
     private toggle: boolean
     game: Game
+    private sound: HTMLAudioElement
 
-    constructor(texture: PIXI.Texture, game: Game) {
+    constructor(texture: PIXI.Texture, game: Game,clickSound: HTMLAudioElement) {
         super(texture)
         this.game = game
+        this.sound = clickSound
         this.width = 80
         this.height = 77
         this.toggle = false;
@@ -18,6 +20,7 @@ export class LogButton extends PIXI.Sprite {
     }
 
     onClick() {
+        this.sound.play()
         //makes the logButton a toggle
         if (!this.toggle) {
             this.toggle = true;

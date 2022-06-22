@@ -18,6 +18,7 @@ import pot from "./images/potje.png"
 import next from "./images/arrow_right.png"
 import previous from "./images/arrow_left.png"
 import music from "url:./sound/music.mp3"
+import clickSound from "url:./sound/click.wav"
 
 //import classes
 import { Log } from './Log'
@@ -76,6 +77,7 @@ export class Game {
             .add('nextButtonTexture', next)
             .add('previousButtonTexture', previous)
             .add("music", music)
+            .add('clickSound', clickSound)
             
 
     this.loader.load(() => this.doneLoading())
@@ -88,16 +90,16 @@ export class Game {
         this.menu = new Menu(this.loader.resources["backgroundTexture2"].texture!, this)
         this.pixi.stage.addChild(this.menu)
 
-        this.startKnop = new startKnop(this.loader.resources["startButton"].texture!, this)
+        this.startKnop = new startKnop(this.loader.resources["startButton"].texture!, this, this.loader.resources["clickSound"].data! )
         this.pixi.stage.addChild(this.startKnop)
 
         //load textures that are to be eventually used
 
         this.farm = new Farm(this.loader.resources["backgroundTexture"].texture!, this)
 
-        this.logButton = new LogButton(this.loader.resources["logButtonTexture"].texture!, this)
-        this.moestuinButton = new moestuinButton(this.loader.resources["moestuinButtonTexture"].texture!, this)
-        this.environmentButton = new environmentButton(this.loader.resources["environmentButtonTexture"].texture!, this)
+        this.logButton = new LogButton(this.loader.resources["logButtonTexture"].texture!, this,this.loader.resources["clickSound"].data!)
+        this.moestuinButton = new moestuinButton(this.loader.resources["moestuinButtonTexture"].texture!, this,this.loader.resources["clickSound"].data!)
+        this.environmentButton = new environmentButton(this.loader.resources["environmentButtonTexture"].texture!, this,this.loader.resources["clickSound"].data!)
 
         this.log = new Log(this.loader.resources["logTexture"].texture!, this)
         this.arrowNext = new arrowNext(this.loader.resources['nextButtonTexture'].texture!, this)
