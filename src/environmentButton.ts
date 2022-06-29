@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js'
+import { Bee } from './beeEvent'
 import { Game } from './game'
 
 export class environmentButton extends PIXI.Sprite {
@@ -25,5 +26,12 @@ export class environmentButton extends PIXI.Sprite {
         this.game.destroyChildren();
         //load new stage
         this.game.loadEnvironmentStage();
+
+        for (let i = 0; i < 14; i++) {
+            let bee = new Bee(this.game.loader.resources["Bee"].texture!);
+            this.game.pixi.stage.addChild(bee);
+            this.game.Bees.push(bee);
+            console.log("bijtje")
+          }
     }
 }

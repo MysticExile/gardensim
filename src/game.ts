@@ -19,6 +19,7 @@ import next from "./images/arrow_right.png"
 import previous from "./images/arrow_left.png"
 import music from "url:./sound/music.mp3"
 import clickSound from "url:./sound/click.wav"
+import bee from "./images/bee.png"
 
 //import classes
 import { Log } from './Log'
@@ -33,6 +34,7 @@ import { Plant } from './Plant'
 import { Pot } from './Pot'
 import { arrowNext } from './arrowNext'
 import { arrowPrevious } from './arrowPrevious'
+import { Bee } from "./beeEvent"
 
 export class Game {
 
@@ -52,6 +54,7 @@ export class Game {
     private environmentButton: environmentButton
     public arrowPrevious: arrowPrevious
     public arrowNext: arrowNext
+    public Bees: Bee[] = []
 
 
     constructor() {
@@ -78,6 +81,7 @@ export class Game {
             .add('previousButtonTexture', previous)
             .add("music", music)
             .add('clickSound', clickSound)
+            .add('Bee', bee)
             
 
     this.loader.load(() => this.doneLoading())
@@ -143,6 +147,10 @@ export class Game {
     }
 
     update(delta: number) {
+        
+        for (const bee of this.Bees) {
+            bee.swim()
+             }
     }
 
     //adds a plant to the array in Log.ts
@@ -244,6 +252,7 @@ export class Game {
         this.log.removePlantFromLog(a);
         console.log(`plant ${a} has been removed`)
     }
+    
 }
 //starts the game
 new Game()

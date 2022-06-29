@@ -1,6 +1,7 @@
 import * as PIXI from "pixi.js";
 
-export class Fish extends PIXI.Sprite {
+
+export class Bee extends PIXI.Sprite {
   private speed: number;
 
   constructor(texture: PIXI.Texture) {
